@@ -1,20 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import (
-    Question, 
-    Book, 
-    Choise, 
-    Person,
-    Ram,
-    Cpu,
-    Gpu,
-    Motherboard,
-    Storage,
-    PowerSupply,
-    Case,
-    Computer
-)
+from .models import *
 
 
 models = [
