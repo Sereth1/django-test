@@ -5,17 +5,40 @@ from . import views
 from . import test
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
-router.register(r'books',views.BookViewSet)
-urlpatterns = [
-    path("lol/", views.nikosTes, name="nikosTes"),
-    path("test/", test.testing, name="testing"),
-    path("bio/", views.biography, name="biography"),
-    path("", views.index, name="index"),
-    path('api/', include(router.urls)),  # Add this line
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path("<int:question_id>/", views.detail, name="detail"),
-    path("<int:question_id>/results/", views.results, name="results"),
-    path("<int:question_id>/vote/", views.vote, name="vote"),
+
+
+routes = [
+    ("users", views.UserViewSet),
+    ("groups", views.GroupViewSet),
+    ("books", views.BookViewSet),
+    ("Computer", views.ComputerViewSet),
+    ("Ram", views.RamViewSet),
+    ("Cpu", views.CpuViewSet),
+    ("Gpu", views.GpuViewSet),
+    ("MotherBoard", views.MotherBoardViewSet),
+    ("Storage", views.StorageViewSet),
+    ("PowerSupply", views.PowerSupplyViewSet),
+    ("Case", views.CaseViewSet),
 ]
+
+
+for route, viewset in routes:
+    router.register(route, viewset)
+
+basic_routes = [
+    ("lol/", views.nikosTes, "nikosTes"),
+    ("test/", test.testing, "testing"),
+    ("bio/", views.biography, "biography"),
+    ("", views.index, "index"),
+    ("<int:question_id>/", views.detail, "detail"),
+    ("<int:question_id>/results/", views.results, "results"),
+    ("<int:question_id>/vote/", views.vote, "vote"),
+]
+
+urlpatterns = [
+    path("api/", include(router.urls)),
+    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
+]
+
+for route, view_func, name in basic_routes:
+    urlpatterns.append(path(route, view_func, name=name))
